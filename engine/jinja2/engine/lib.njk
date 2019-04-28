@@ -1,0 +1,54 @@
+{% macro seg(news) %}
+    {% for new in news %}
+        <div class="ui piled segment">
+            <a class="ui header" href="/detail/{{new.id}}">{{ new.title }}</a>
+            <p>Publish Time:
+                {{ new.time }}</p>
+            <p>{{ new.digest }}</p>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro pagination(page, totalPage, pre) %}
+    {% if totalPage != 1 %}
+        <div class="ui pagination menu">
+            <a class="icon item" href="{{ pre }}page=1">
+                <i class="left chevron icon"></i>
+            </a>
+
+            {% if page - 5 > 0 %}
+                <a class="disabled item">
+                    ...
+                </a>
+            {% endif %}
+            {% for i in range(page - 4, page) %}
+                {% if i > 0 %}
+                    <a class="item" href="{{ pre }}page={{ i }}">
+                        {{ i }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            <a class="active item" href="{{ pre }}page={{ page }}">
+                {{ page }}
+            </a>
+
+            {% for i in range(page + 1, page + 5) %}
+                {% if page + 1 <= totalPage %}
+                    <a class="item" href="{{ pre }}page={{ i }}">
+                        {{ i }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+            {% if page - 5 <= totalPage %}
+                <a class="disabled item">
+                    ...
+                </a>
+            {% endif %}
+
+            <a class="icon item" href="{{ pre }}page={{ totalPage }}">
+                <i class="right chevron icon"></i>
+            </a>
+        </div>
+    {% endif %}
+{% endmacro %}

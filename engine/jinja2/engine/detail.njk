@@ -1,0 +1,36 @@
+{% extends 'engine/base.njk' %}
+
+{% block head %}
+    <script>
+        $(function () {
+            $('.ui.sticky').sticky({context: '#article'});
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="ui segment">
+        <h1 class="ui header" style="text-align:center">
+            {{ article.title }}
+        </h1>
+        <p style="text-align:center">
+            {{ article.time }}
+        </p>
+        {% for body in article.body %}
+            <p style="font-size:20px">{{ body }}</p>
+        {% endfor %}
+
+        <div class="ui right rail" id="article">
+            <div class="ui sticky">
+                {% for rec in recommends %}
+                    <div class="ui segment">
+                        <h4>推荐阅读:</h4>
+                        <a href="/detail/{{ rec.id }}">
+                            {{ rec.title }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

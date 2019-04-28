@@ -1,0 +1,50 @@
+{% extends "engine/base.njk" %}
+{% import "engine/lib.njk" as lib %}
+
+{% block head %}
+    <title>
+        {{ q }}
+        - TA
+    </title>
+
+    <script>
+        findKeyWord = function (i) {
+            var str = this[0];
+            var orgText = $(str).text();
+
+            orgText = orgText.replace(pattern, function ($1) {
+                return "<span style='background-color: red;'>" + $1 + "</span>"
+            });
+
+            $(str).html(orgText);
+        };
+
+        $(function () {
+            $('.prompt').attr('value', "{{ q }}")
+            $('#fromTime').attr('value', "{{ fromTime }}")
+            $('#toTime').attr('value', "{{ toTime }}");
+            {% for word in words %}
+                $('.piled a,p').each(function (i) {
+                    $(this).html($(this).html().replace(/{{word}}/g, `<span style="color:red">{{word}}</span>`))
+                });
+            {% endfor %}
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    {% if firstSearch %}
+        <div class="ui positive message">
+            <p>
+                We got
+                {{ total }}
+                messages in
+                {{ "%.3f" | format(costTime) }}
+                s.
+            </p>
+        </div>
+    {% endif %}
+
+    {{ lib.seg(news) }}
+    {{ lib.pagination(page, totalPage, "/search?q=" + q + "&from=" + fromTime + "&to=" + toTime + "&")}}
+{% endblock %}

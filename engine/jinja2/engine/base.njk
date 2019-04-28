@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="TA's Search Engine">
+
+        <!-- Semantic UI -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" integrity="sha384-vQPhfJdJkfTCHP7ouiqoAojjcDFuU346yP8z/pRpSn0xsWOfkMd+DkNmxns9jy4l" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js" integrity="sha384-d0+ufSr6Y7eU5V6E8Bt1AioIn4ParGkr0AwQ5RZD/S2mTaiEXMV78mqaYKMLE2qv" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" integrity="sha384-l5mJc3Z+1vy9cW5SL9rsLY7Lj0t9oELCwHOEXCC11hCf119un/8RwSFp99rwgIyo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js" integrity="sha384-eFN1d/uLeBpp4ryH+tNdeHBCd8vlbko7MvH0meYTssq7yDk/L8Jpd8qjaA5IMrrb" crossorigin="anonymous"></script>
+
+        <!-- ico -->
+        <link rel="icon" type="image/ico" href="/static/engine/white.ico">
+
+        <!-- script -->
+        <script>
+            $(function () {
+                // 一些我曾经写的看不懂的信息啦啦啦
+                $('.ui.main').css('margin-top', $('.ui.menu').outerHeight() * 1.3);
+                $('.ui.dropdown').dropdown();
+
+                // 搜索环节
+                function query() {
+                    q = $('.search').search('get value')[0];
+                    $(location).attr('href', `/search?q=${q}&from=${$('#fromTime').val()}&to=${$('#toTime').val()}`);
+                };
+                $('#searchInput').keydown(function (e) {
+                    if (e.which == 13) {
+                        query();
+                        return false;
+                    }
+                });
+                $('.search.icon').click(function (e) {
+                    query();
+                    return false;
+                });
+            });
+        </script>
+
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div class="ui top fixed borderless compact massive stackable menu" style="display: flex">
+            <div class="ui container">
+                <div class="ui dropdown item">
+                    <div>
+                        <span>Time</span>
+                        <i class="dropdown icon"></i>
+                    </div>
+                    <div class="menu">
+                        <input class="ui input" placeholder="From &quot;1990.01.05&quot;" style="border:none" id="fromTime">
+                        <input class="ui input" placeholder="To &quot;2008.06.08&quot;" style="border:none" id="toTime">
+                        <div class="item"></div>
+                    </div>
+                </div>
+                <div class="ui search white fluid item" style="flex-grow:1;">
+                    <div class="ui transparent icon input" id="searchInput">
+                        <input class="prompt" type="text" placeholder="Nothing is all" autofocus="autofocus">
+                        <i class="search link icon"></i>
+                    </div>
+                    <div class="results"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui main container">
+            {% block main %}{% endblock %}
+
+            <h4 class="ui horizontal divider header">
+                The End of The World
+            </h4>
+            <br/>
+        </div>
+    </body>
+</html>

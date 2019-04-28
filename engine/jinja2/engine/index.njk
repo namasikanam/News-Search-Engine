@@ -1,0 +1,20 @@
+{% extends "engine/base.njk" %}
+{% import "engine/lib.njk" as lib %}
+
+{% block head %}
+    <title>
+        TA
+    </title>
+{% endblock %}
+
+{% block main %}
+    <div class="ui positive message">
+        <p>
+            We have
+            {{ totalNews }}
+            news.
+        </p>
+    </div>
+    {{ lib.seg(news) }}
+    {{ lib.pagination(page, totalPage, "/?")}}
+{% endblock %}
